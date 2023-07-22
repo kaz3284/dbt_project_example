@@ -1,0 +1,46 @@
+
+version: 2
+
+models:
+  - name: mp_address
+    description: "address model"
+    docs:
+      show: true
+    columns:
+      - name: prefecture
+        meta:
+          tag:
+            - type: masking_policy
+              name: masking_policy_secure_level_1
+              value: mask_hash
+      - name: city
+        meta:
+          tag:
+            - type: masking_policy
+              name: masking_policy_secure_level_1
+              value: mask_hash
+      - name: zip
+        meta:
+          tag:
+            - type: masking_policy
+              name: masking_policy_secure_level_2
+              value: mask_anonymous
+      - name: address
+        meta:
+          tag:
+            - type: masking_policy
+              name: masking_policy_secure_level_2
+              value: mask_anonymous
+      - name: tel
+        meta:
+          tag:
+            - type: masking_policy
+              name: masking_policy_secure_level_2
+              value: mask_anonymous
+      - name: fax
+        meta:
+          tag:
+            - type: masking_policy
+              name: masking_policy_secure_level_2
+              value: mask_anonymous
+
