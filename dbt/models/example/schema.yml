@@ -11,20 +11,20 @@ models:
         meta:
           tag:
             - type: masking_policy
-              name: masking_policy_secure_level_1
-              value: mask_hash
+              name: masking_policy_secure_level_1 #レベル1の情報保護
+              value: mask_hash #hash化：解読はできないが結合
       - name: city
         meta:
           tag:
             - type: masking_policy
-              name: masking_policy_secure_level_1
-              value: mask_hash
+              name: masking_policy_secure_level_1 #レベル1の情報保護
+              value: mask_hash #hash化：解読はできないが結合は可能
       - name: zip
         meta:
           tag:
             - type: masking_policy
-              name: masking_policy_secure_level_2
-              value: mask_anonymous
+              name: masking_policy_secure_level_2 #レベル2の情報保護
+              value: mask_anonymous #匿名化：解読も結合も不可能
       - name: address
         meta:
           tag:
