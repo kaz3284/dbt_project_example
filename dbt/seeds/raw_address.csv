@@ -1,0 +1,4 @@
+account_id,country,zip,prefecture,city,address,tel,fax
+1,Japan,81-0001,Saitama-ken,Hiki-gun,0001,00-0000-0001,00-0001-0001
+2,Japan,81-0002,Saitama-ken,Higashimatsuyama-shi,0002,00-0000-0002,00-0001-0002
+3,Japan,81-0003,Tokyo,Toshima-ku,0003,00-0000-0003,00-0001-0003

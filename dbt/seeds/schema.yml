@@ -1,0 +1,23 @@
+
+version: 2
+
+seeds:
+  - name: raw_address
+    description: "サンプル用の住所生データ"
+    columns:
+      - name: account_id
+        description: "アカウントID"
+      - name: country
+        description: "国"
+      - name: zip
+        description: "郵便番号"
+      - name: prefecture
+        description: "都道府県"
+      - name: city
+        description: "市区町村"
+      - name: address
+        description: "番地"
+      - name: tel
+        description: "電話番号"
+      - name: fax
+        description: "FAX番号"
