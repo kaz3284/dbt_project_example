@@ -1,8 +1,8 @@
-# syntax=docker/dockerfile:1.3-labs
+# syntax=docker/dockerfile:1.4
 FROM python:3.10-bullseye
 #
 # VS Code Development Container Scripts
-# https://github.com/microsoft/vscode-dev-containers/tree/main/script-library
+# https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/script-library
 #
 ARG INSTALL_ZSH="true"
 ARG USERNAME="vscode"
@@ -14,16 +14,15 @@ ARG INSTALL_OH_MYS="false"
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends git curl ca-certificates direnv 2>&1 \
-    && curl -sSL -o- "https://raw.githubusercontent.com/microsoft/vscode-dev-containers/master/script-library/common-debian.sh" | bash /dev/stdin "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "${INSTALL_OH_MYS}"
+    && curl -sSL -o- "https://raw.githubusercontent.com/microsoft/vscode-dev-containers/v0.234.0/script-library/common-debian.sh" | bash /dev/stdin "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "${INSTALL_OH_MYS}" \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install pipenv
+RUN python3 -m pip install --no-cache-dir --upgrade pip
 
 WORKDIR /tmp/.devcontainer
 COPY requirements.txt requirements.txt
-RUN python3 -m pip install -r requirements.txt && rm -rf /tmp/.devcontainer
+RUN python3 -m pip install --no-cache-dir -r requirements.txt && rm -rf /tmp/.devcontainer
 
-COPY . .
 USER ${USERNAME}
 
 RUN <<EOR
@@ -44,4 +43,4 @@ EOT
 EOR
 
 WORKDIR /workspace
-CMD ["sleep", "65535"]
+CMD ["sleep", "infinity"]

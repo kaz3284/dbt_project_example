@@ -38,3 +38,11 @@ models:
   # タグベースマスキングポリシー適用のためのマクロ起動設定
   post-hook:
     - "{{ apply_tag_setting() }}"
+
+# Configuring seeds
+# 先頭ゼロを含む値（address列など）が数値型に推論されて桁落ちしないよう型を明示
+seeds:
+  dbt_example:
+    raw_address:
+      +column_types:
+        address: varchar
