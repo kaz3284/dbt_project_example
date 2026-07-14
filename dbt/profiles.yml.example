@@ -1,0 +1,35 @@
+dbt_example:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+
+      # キーペア認証を使用
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH_DEV') }}"
+      private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_KEY_PASSPHRASE_DEV') }}"
+
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'TRANSFORMER') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'DEV_DB') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'DEV_WH') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'DBT_EXAMPLE') }}"
+
+      threads: 4
+      client_session_keep_alive: False
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH_PROD') }}"
+      private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_KEY_PASSPHRASE_PROD') }}"
+
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'TRANSFORMER') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'PROD_DB') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'PROD_WH') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'DBT_EXAMPLE') }}"
+
+      threads: 4
+      client_session_keep_alive: False

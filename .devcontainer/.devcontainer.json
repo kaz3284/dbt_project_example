@@ -7,7 +7,8 @@
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
 	"dockerComposeFile": [
-		"./docker-compose.yml"
+		"./docker-compose.yml",
+		"./docker-compose.local.yml"
 	],
 
 	// The 'service' property is the name of the service for the container that VS Code should
@@ -18,37 +19,86 @@
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/workspace",
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"git.path": "/usr/bin/git"
+	// Claude Code CLI is added via a feature instead of baking it into the Dockerfile,
+	// so it stays optional and doesn't affect host-side (non-devcontainer) development.
+	"features": {
+		"ghcr.io/anthropics/devcontainer-features/claude-code": {}
 	},
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		// python
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-
-		// dbt
-		"bastienboutonnet.vscode-dbt",
-		"innoverio.vscode-dbt-power-user",
-		"henriblancke.vscode-dbt-formatter",
-		
-		// snowflake, sql
-		"mtxr.sqltools",
-		"koszti.snowflake-driver-for-sqltools",
-		
-		// github
-		"cschleiden.vscode-github-actions",
-		"GitHub.vscode-pull-request-github",
-
-		// misc
-		"donjayamanne.git-extension-pack",
-		"oderwat.indent-rainbow",
-		"FusionDev.new-zenkaku",
-		"garytyler.darcula-pycharm",
-		"streetsidesoftware.code-spell-checker"
+	// Persist ~/.claude (auth/session state) across container rebuilds using a named volume
+	// scoped per-devcontainer (${devcontainerId}), so re-login isn't required each rebuild
+	// and state doesn't leak across other projects/devcontainers.
+	// Assumes remoteUser "vscode" -> home directory /home/vscode (see Dockerfile: USERNAME="vscode").
+	//
+	// Alternative (lower isolation, no first-login needed): bind-mount the host's ~/.claude
+	// instead of a named volume:
+	//   "mounts": ["source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind"]
+	// If you use the bind-mount alternative, add a postStartCommand to fix ownership, e.g.:
+	//   "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude"
+	"mounts": [
+		"source=claude-code-config-${devcontainerId},target=/home/vscode/.claude,type=volume"
 	],
+
+	// Point Claude Code at the persisted volume above.
+	"containerEnv": {
+		"CLAUDE_CONFIG_DIR": "/home/vscode/.claude"
+	},
+
+	// A freshly created named volume is initialized by Docker with root ownership when the
+	// target path doesn't already exist (with correct ownership) in the image. Since the
+	// Dockerfile isn't being modified to pre-create/chown /home/vscode/.claude (see anthropics/claude-code's
+	// own .devcontainer/Dockerfile for that pattern), fix ownership here instead so the non-root
+	// "vscode" user (remoteUser) can write to it, e.g. during `claude login`. Requires the
+	// passwordless sudo that common-debian.sh grants the created user in this Dockerfile.
+	"postCreateCommand": "sudo mkdir -p /home/vscode/.claude && sudo chown -R vscode:vscode /home/vscode/.claude",
+
+	// Only needed if you authenticate via API key instead of interactive login.
+	// Uses remoteEnv (not containerEnv) so the value is resolved per remote connection from the
+	// host's env var rather than being baked into the container process tree; never hardcode the key.
+	// "remoteEnv": {
+	// 	"ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
+	// },
+
+	"customizations": {
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"git.path": "/usr/bin/git"
+			},
+
+			// Add the IDs of extensions you want installed when the container is created.
+			// Extensions run on the container side of VS Code's client/server split, so
+			// Claude Code's extension must be listed here (not just the CLI feature above).
+			"extensions": [
+				// claude code
+				"anthropic.claude-code",
+
+				// python
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+
+				// dbt
+				"bastienboutonnet.vscode-dbt",
+				"innoverio.vscode-dbt-power-user",
+				"henriblancke.vscode-dbt-formatter",
+
+				// snowflake, sql
+				"mtxr.sqltools",
+				"koszti.snowflake-driver-for-sqltools",
+
+				// github
+				"cschleiden.vscode-github-actions",
+				"GitHub.vscode-pull-request-github",
+
+				// misc
+				"donjayamanne.git-extension-pack",
+				"oderwat.indent-rainbow",
+				"FusionDev.new-zenkaku",
+				"garytyler.darcula-pycharm",
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
