@@ -6,7 +6,7 @@
 
 ```
 .devcontainer/
-├── .devcontainer.json       # Dev Container本体の設定
+├── devcontainer.json        # Dev Container本体の設定
 ├── Dockerfile               # ベースイメージ（Python + dbt-snowflake）
 ├── docker-compose.yml       # コンテナ定義（共通設定・環境変数・基本マウント）
 ├── docker-compose.local.yml # ローカル開発用の追加マウント（gitconfig、SSH agent、gnupg等）
@@ -35,7 +35,7 @@
    - 通知が出た場合は「Reopen in Container」を選択してもOKです
 3. コンテナが起動したら、ターミナルは自動的に `/workspace` (リポジトリルート) を指します
 
-リビルドが必要な場合（Dockerfileや`.devcontainer.json`を変更した場合）は、コマンドパレットから **Dev Containers: Rebuild Container** を実行してください。
+リビルドが必要な場合（Dockerfileや`devcontainer.json`を変更した場合）は、コマンドパレットから **Dev Containers: Rebuild Container** を実行してください。
 
 ## Claude Codeの利用
 
@@ -50,7 +50,7 @@
   claude login
   ```
 
-- APIキー方式で認証したい場合は、`.devcontainer.json` 内でコメントアウトされている以下の設定を有効にし、ホスト側で `ANTHROPIC_API_KEY` を環境変数として設定してください（キーをファイルに直接書かないでください）。
+- APIキー方式で認証したい場合は、`devcontainer.json` 内でコメントアウトされている以下の設定を有効にし、ホスト側で `ANTHROPIC_API_KEY` を環境変数として設定してください（キーをファイルに直接書かないでください）。
 
   ```jsonc
   "remoteEnv": {
