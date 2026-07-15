@@ -26,4 +26,4 @@
 
 これにより、モデルをビルドするたびに、あらかじめ定義したマスキングポリシー用タグがカラムへ自動的に反映されます。
 
-> 事前にSnowflake側でタグ（`tags.masking_policy_secure_level_1` など）とマスキングポリシー（`mask_hash` / `mask_anonymous` など）を作成・アタッチしておく必要があります。このリポジトリにはSnowflake側のタグ／ポリシー定義自体は含まれていません。
+> 事前にSnowflake側でロール（`DEVELOPER`、`SECURE_LEVEL_1`/`SECURE_LEVEL_2`）、タグ（`tags.masking_policy_secure_level_1` など）、マスキングポリシー（`mask_hash` / `mask_anonymous` など）を作成・アタッチしておく必要があります。これらの定義SQLは [`snowflake_setup/`](../../snowflake_setup/README.md) にまとまっています（`init/` → `roles/` → `tags/` の順で適用）。dbtを実行する前に、接続先のデータベースに対して一度適用してください。

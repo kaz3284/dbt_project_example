@@ -26,9 +26,9 @@ dbt_example:
       private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH_PROD') }}"
       private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_KEY_PASSPHRASE_PROD') }}"
 
-      role: "{{ env_var('SNOWFLAKE_ROLE', 'TRANSFORMER') }}"
-      database: "{{ env_var('SNOWFLAKE_DATABASE', 'PROD_DB') }}"
-      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'PROD_WH') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'DEVELOPER') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'TRIAL_DB') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'DEVELOPER_WH') }}"
       schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'DBT_EXAMPLE') }}"
 
       threads: 4
