@@ -32,11 +32,21 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_example:
+    +persist_docs:  
+      relation: true  
+      columns: true
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+    # TPC-H ハンズオン用の3層アーキテクチャ（staging → intermediate → marts）
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table
   # タグベースマスキングポリシー適用のためのマクロ起動設定
-  post-hook:
+  +post-hook:
     - "{{ apply_tag_setting() }}"
 
 # Configuring seeds
