@@ -4,43 +4,56 @@ version: 2
 models:
   - name: mp_address
     description: "address model"
-    docs:
-      show: true
+    config:
+      docs:
+        show: true
     columns:
       - name: prefecture
-        meta:
-          tag:
-            - type: masking_policy
-              name: masking_policy_secure_level_1 #レベル1の情報保護
-              value: mask_hash #hash化：解読はできないが結合
+        description: "都道府県"
+        config:
+          meta:
+            tag:
+              - type: masking_policy
+                name: masking_policy_secure_level_1 #レベル1の情報保護
+                value: mask_hash #hash化：解読はできないが結合
       - name: city
-        meta:
-          tag:
-            - type: masking_policy
-              name: masking_policy_secure_level_1 #レベル1の情報保護
-              value: mask_hash #hash化：解読はできないが結合は可能
+        description: "市区町村"
+        config:
+          meta:
+            tag:
+              - type: masking_policy
+                name: masking_policy_secure_level_1 #レベル1の情報保護
+                value: mask_hash #hash化：解読はできないが結合は可能
       - name: zip
-        meta:
-          tag:
-            - type: masking_policy
-              name: masking_policy_secure_level_2 #レベル2の情報保護
-              value: mask_anonymous #匿名化：解読も結合も不可能
+        description: "郵便番号"
+        config:
+          meta:
+            tag:
+              - type: masking_policy
+                name: masking_policy_secure_level_2 #レベル2の情報保護
+                value: mask_anonymous #匿名化：解読も結合も不可能
       - name: address
-        meta:
-          tag:
-            - type: masking_policy
-              name: masking_policy_secure_level_2
-              value: mask_anonymous
+        description: "番地"
+        config:
+          meta:
+            tag:
+              - type: masking_policy
+                name: masking_policy_secure_level_2
+                value: mask_anonymous
       - name: tel
-        meta:
-          tag:
-            - type: masking_policy
-              name: masking_policy_secure_level_2
-              value: mask_anonymous
+        description: "電話番号"
+        config:
+          meta:
+            tag:
+              - type: masking_policy
+                name: masking_policy_secure_level_2
+                value: mask_anonymous
       - name: fax
-        meta:
-          tag:
-            - type: masking_policy
-              name: masking_policy_secure_level_2
-              value: mask_anonymous
+        description: "FAX番号"
+        config:
+          meta:
+            tag:
+              - type: masking_policy
+                name: masking_policy_secure_level_2
+                value: mask_anonymous
 
