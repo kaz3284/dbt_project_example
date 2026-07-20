@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_tpch__lineitems
+    description: "注文明細のクレンジング済みビュー。net_amount を計算済み"
+    columns:
+      - name: order_key
+        description: "注文キー"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_tpch__orders')
+                field: order_key
+      - name: line_number
+        description: "注文内の明細行番号。order_key との組み合わせで一意"
+      - name: quantity
+        description: "数量"
+      - name: extended_price
+        description: "明細金額（単価 × 数量、割引前）"
+      - name: discount
+        description: "割引率（0〜1 の小数）"
+      - name: tax
+        description: "税率（0〜1 の小数）"
+      - name: net_amount
+        description: "純売上金額 = extended_price × (1 - discount)"
+      - name: return_flag
+        description: "返品フラグ（R: 返品, A: 承認済み, N: 返品なし）"
+      - name: ship_date
+        description: "出荷日"

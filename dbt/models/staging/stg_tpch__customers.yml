@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: stg_tpch__customers
+    description: "顧客マスタのクレンジング済みビュー"
+    columns:
+      - name: customer_key
+        description: "顧客キー（主キー）"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "顧客名"
+      - name: nation_key
+        description: "国キー。stg_tpch__nations への外部キー"
+      - name: market_segment
+        description: "市場セグメント（例: BUILDING, AUTOMOBILE など）"
+      - name: account_balance
+        description: "口座残高"

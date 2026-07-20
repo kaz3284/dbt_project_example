@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: int_orders_with_items
+    description: "注文と明細を結合し、注文粒度に集約した中間モデル"
+    columns:
+      - name: order_key
+        description: "注文キー（主キー）"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_key
+        description: "顧客キー"
+      - name: order_date
+        description: "注文日"
+      - name: order_month
+        description: "注文年月（月初日）"
+      - name: order_status
+        description: "注文ステータス（F: 完了, O: 未完了, P: 一部完了）"
+      - name: line_item_count
+        description: "注文に含まれる明細行数"
+      - name: total_quantity
+        description: "数量合計（明細の quantity の合計）"
+      - name: net_sales_amount
+        description: "純売上合計（明細の net_amount の合計）"
