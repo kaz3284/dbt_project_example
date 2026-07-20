@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "注文ファクト。注文粒度で売上・地域を保持"
+    columns:
+      - name: order_key
+        description: "注文キー（主キー）"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_key
+        description: "顧客キー"
+      - name: customer_name
+        description: "顧客名"
+      - name: region_name
+        description: "顧客の所属地域名"
+      - name: nation_name
+        description: "顧客の所属国名"
+      - name: order_date
+        description: "注文日"
+      - name: order_month
+        description: "注文年月（月初日）"
+      - name: order_status
+        description: "注文ステータス（F: 完了, O: 未完了, P: 一部完了）"
+      - name: line_item_count
+        description: "注文に含まれる明細行数"
+      - name: total_quantity
+        description: "数量合計"
+      - name: net_sales_amount
+        description: "純売上合計"
+        data_tests:
+          - not_null

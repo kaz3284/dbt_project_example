@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "顧客ディメンション。国名・地域名を付与済み"
+    columns:
+      - name: customer_key
+        description: "顧客キー（主キー）"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "顧客名"
+      - name: market_segment
+        description: "市場セグメント（例: BUILDING, AUTOMOBILE など）"
+      - name: account_balance
+        description: "口座残高"
+      - name: nation_name
+        description: "国名"
+      - name: region_name
+        description: "地域名（例: ASIA, EUROPE など）"

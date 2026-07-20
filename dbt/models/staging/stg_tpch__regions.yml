@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_tpch__regions
+    description: "地域マスタ"
+    columns:
+      - name: region_key
+        description: "地域キー（主キー）"
+        data_tests:
+          - unique
+          - not_null
+      - name: region_name
+        description: "地域名（例: ASIA, EUROPE など）"
